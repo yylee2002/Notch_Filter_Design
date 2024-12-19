@@ -4,12 +4,14 @@ close all; clear; clc;
 
 %% Parameters
 % Notch Filter (Open-loop)
-C1 = 10e-9;   % (F)
-C2 = 10e-9;   % (F)
-C3 = 20e-9;   % (F)
-R1 = 270e3;   % (Ω)
-R2 = 270e3;   % (Ω)
-R3 = 136e3;   % (Ω)
+R = 270e3;    % (F)
+C = 10e-9;    % (Ω)
+C1 = C;       %10e-9;   % (F)
+C2 = C;       %10e-9;   % (F)
+C3 = 2*C;     %20e-9;   % (F)
+R1 = R;       %270e3;   % (Ω)
+R2 = R;       %270e3;   % (Ω)
+R3 = R/2;     %136e3;   % (Ω)
 
 % Feedback
 R4 = 40e3;    % (Ω)
@@ -54,7 +56,7 @@ subplot(2, 1, 1)
     axis([-inf, inf, mag_low, mag_high]);
 subplot(2, 1, 2)
     hold on;
-    plot([Tfreq_min, Tfreq_min], [-180, 180], 'LineWidth', 3, 'Color', 'r');
+    plot([Tfreq_min, Tfreq_min], [-360, 360], 'LineWidth', 3, 'Color', 'r');
     plot(Tfreq, Tphase, 'LineWidth', 2, 'Color', 'b');
     plot(Hfreq, Hphase, 'LineWidth', 2, 'Color', 'g');
     hold off;
@@ -62,10 +64,10 @@ subplot(2, 1, 2)
     set(gca, 'XScale', 'log');
     xlabel("$f$ (Hz)", 'Interpreter', 'latex');
     ylabel("$\angle T$ (degree)", 'Interpreter', 'latex');% title("");
-    yticks([-90, 0, 90]);
-    axis([-inf, inf, -90, 90]);
+    yticks([-360, -270, -180, -90, 0, 90]);
+    axis([-inf, inf, -360, 0]);
 set(fig1, "position", [400, 150, 800, 450]);
-figname = "Figure/Bode_T";
+figname = "Results/Bode_T";
 saveas(fig1, figname);
 saveas(fig1, figname + ".png");
 
@@ -74,3 +76,8 @@ saveas(fig1, figname + ".png");
 % bode(sysT);
 % bode(sysH);
 % margin(sysH);
+
+%% 
+figure;
+sysTest = 1 / ((1+s*R*C)^2/(1+(s*R*C)^2)*2-1);
+bode(sysTest);
