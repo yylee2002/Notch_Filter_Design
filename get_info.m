@@ -10,7 +10,7 @@ function [mag_res, freq_res, index] = get_info(mag, freq, type)
         % Get the corresponding frequency
         freq_res = freq(index);
     else
-        error('Invalid type. Use "max" or "min".');
+        error('Invalid type. Use "max" or "min", or "Q".');
     end
 end
 
