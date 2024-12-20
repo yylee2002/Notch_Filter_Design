@@ -17,7 +17,7 @@ R3 = R/2;     %136e3;   % (Ω)
 R4 = 40e3;    % (Ω)
 R5 = 82;      % (Ω)
 beta = R5 / (R4 + R5);
-beta = 1;
+beta = 10;
 
 %% Simulation Settings
 % Range of Bode Plot
@@ -81,3 +81,10 @@ saveas(fig1, figname + ".png");
 figure;
 sysTest = 1 / ((1+s*R*C)^2/(1+(s*R*C)^2)*2-1);
 bode(sysTest);
+
+sysHtheo = (s^2 + (1/R/C)^2) / (s^2 + s*(1/R/C)*(4*(1-beta)) + (1/R/C)^2);
+sysHtest = (1 + (s*R*C)^2) / (1 + 4*(1-beta)*s*R*C + (s*R*C)^2);
+figure;
+hold on;
+bode(sysHtheo);
+bode(sysHtest);
