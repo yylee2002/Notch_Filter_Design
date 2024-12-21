@@ -23,7 +23,7 @@ beta = R5 / (R4 + R5);
 % Range of Bode Plot
 f_low = 1e0;        % (Hz)
 f_high = 1e4;       % (Hz)
-mag_low = -120;     % (dB)
+mag_low = -80;     % (dB)
 mag_high = 0;       % (dB)
 phase_low = -110;   % (degree)
 phase_high = 110;   % (degree)
