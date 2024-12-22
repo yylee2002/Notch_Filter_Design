@@ -116,6 +116,19 @@ saveas(fig2, figname + ".png");
 fprintf("T(s): Q = %g\n", TQ);
 fprintf("H(s): Q = %g\n", HQ);
 
+%% Other Perspective
+% Root Locus
+fig3 = figure(Name = "Bode Plot");
+hold on;
+rlocus(sysH);
+rlocus(sysT);
+hold off;
+grid on;
+set(fig3, "position", [400, 150, 600, 450]);
+figname = "Results/Root_Locus";
+saveas(fig3, figname);
+saveas(fig3, figname + ".png");
+
 %% Test
 % figure;
 % sysTest = 1 / ((1+s*R*C)^2/(1+(s*R*C)^2)*2-1);
