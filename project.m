@@ -17,7 +17,6 @@ R3 = R/2;     %136e3;   % (Ω)
 R4 = 20e3;    % (Ω)
 R5 = 80e3;      % (Ω)
 beta = R5 / (R4 + R5);
-% beta = 0.9;
 
 %% Simulation Settings
 % Range of Bode Plot
@@ -35,13 +34,13 @@ Zc = 1 / (s*C1 + s*C2 + 1/R3);
 Zr = 1 / (1/R1 + 1/R2 + s*C3);
 
 sysT = (s^2*C1*C2*Zc + Zr/R1/R2) / (s*C2 + 1/R2 - s^2*C2^2*Zc - Zr/R2/R2);
-[Tmag, Tphase, Tfreq] = bode_f(sysT, f_low, f_high);
+[Tmag, Tphase, Tfreq] = bode_f(sysT, f_low, f_high, 60);
 [Tmag_max, Tfreq_max, Tindex_max] = get_info(Tmag, Tfreq, "max");
 [Tmag_min, Tfreq_min, Tindex_min] = get_info(Tmag, Tfreq, "min");
 [TQ, Tfcenter, Tfmin, Tfmax, TBW] = Q_info(Tmag, Tfreq);
 
 sysH = (1 + (s*R*C)^2) / (1 + 4*(1-beta)*s*R*C + (s*R*C)^2);
-[Hmag, Hphase, Hfreq] = bode_f(sysH, f_low, f_high);
+[Hmag, Hphase, Hfreq] = bode_f(sysH, f_low, f_high, 60);
 [Hmag_max, Hfreq_max, Hindex_max] = get_info(Hmag, Hfreq, "max");
 [Hmag_min, Hfreq_min, Hindex_min] = get_info(Hmag, Hfreq, "min");
 [HQ, Hfcenter, Hfmin, Hfmax, HBW] = Q_info(Hmag, Hfreq);
