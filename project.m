@@ -30,16 +30,19 @@ phase_ticks = [-90, -45, 0, 45, 90]; % [-360, -270, -180, -90, 0, 90, 180];
 
 %% Transfer function
 s = tf('s');
-Zc = 1 / (s*C1 + s*C2 + 1/R3);
-Zr = 1 / (1/R1 + 1/R2 + s*C3);
+% Zc = 1 / (s*C1 + s*C2 + 1/R3);
+% Zr = 1 / (1/R1 + 1/R2 + s*C3);
 
-sysT = (s^2*C1*C2*Zc + Zr/R1/R2) / (s*C2 + 1/R2 - s^2*C2^2*Zc - Zr/R2/R2);
+wc = 1 / (R * C);
+% sysT = (s^2*C1*C2*Zc + Zr/R1/R2) / (s*C2 + 1/R2 - s^2*C2^2*Zc - Zr/R2/R2);
+sysT = (s^2 + wc^2) / (s^2 + 4*s*wc + wc^2);
 [Tmag, Tphase, Tfreq] = bode_f(sysT, f_low, f_high, 60);
 [Tmag_max, Tfreq_max, Tindex_max] = get_info(Tmag, Tfreq, "max");
 [Tmag_min, Tfreq_min, Tindex_min] = get_info(Tmag, Tfreq, "min");
 [TQ, Tfcenter, Tfmin, Tfmax, TBW] = Q_info(Tmag, Tfreq);
 
-sysH = (1 + (s*R*C)^2) / (1 + 4*(1-beta)*s*R*C + (s*R*C)^2);
+% sysH = (1 + (s*R*C)^2) / (1 + 4*(1-beta)*s*R*C + (s*R*C)^2);
+sysH = (s^2 + wc^2) / (s^2 + 4*(1-beta)*s*wc + wc^2);
 [Hmag, Hphase, Hfreq] = bode_f(sysH, f_low, f_high, 60);
 [Hmag_max, Hfreq_max, Hindex_max] = get_info(Hmag, Hfreq, "max");
 [Hmag_min, Hfreq_min, Hindex_min] = get_info(Hmag, Hfreq, "min");
@@ -124,6 +127,7 @@ rlocus(sysH);
 rlocus(sysT);
 hold off;
 grid on;
+axis("equal");
 set(fig3, "position", [400, 150, 600, 450]);
 figname = "Results/Root_Locus";
 saveas(fig3, figname);
