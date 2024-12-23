@@ -121,7 +121,7 @@ fprintf("H(s): Q = %g\n", HQ);
 
 %% Other Perspective
 % Root Locus
-fig3 = figure(Name = "Bode Plot");
+fig3 = figure(Name = "Root Locus");
 hold on;
 rlocus(sysH);
 rlocus(sysT);
@@ -132,6 +132,27 @@ set(fig3, "position", [400, 150, 600, 450]);
 figname = "Results/Root_Locus";
 saveas(fig3, figname);
 saveas(fig3, figname + ".png");
+
+%% Step Response
+time_max = 0.08;
+[Ty, Tt] = step(sysT, time_max);
+[Hy, Ht] = step(sysH, time_max);
+
+fig4 = figure(Name = "Step Response");
+hold on;
+plot(Tt, Ty, 'LineWidth', 2, 'Color', 'b');
+plot(Ht, Hy, 'LineWidth', 2, 'Color', 'g');
+hold off;
+grid on;
+lgd = legend(["$T(s)$", "$H(s)$"]);
+set(lgd, 'interpreter', 'latex');
+xlabel("$t$ (sec)", 'Interpreter', 'latex');
+ylabel("Step Response", 'Interpreter', 'latex');
+% axis("equal");
+set(fig4, "position", [500, 150, 600, 450]);
+figname = "Results/Step_Response";
+saveas(fig4, figname);
+saveas(fig4, figname + ".png");
 
 %% Test
 % figure;
