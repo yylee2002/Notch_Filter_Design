@@ -127,6 +127,8 @@ rlocus(sysH);
 rlocus(sysT);
 hold off;
 grid on;
+lines = findobj(gcf, 'Type', 'line');
+set(lines, 'LineWidth', 2);  % Set all lines to a thicker width of 2
 axis("equal");
 set(fig3, "position", [400, 150, 600, 450]);
 figname = "Results/Root_Locus";
